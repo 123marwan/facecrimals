@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -87,12 +88,15 @@ class ScreenTwoScreen extends StatelessWidget {
            dio.options.headers["Content-Type"] = "multipart/form-data";
 
            Response response = await dio.post(
-           ' https://a185-154-190-136-76.ngrok-free.app/predict',
+           'https://60ff-154-190-121-33.ngrok-free.app/predict',
            //  'http://192.168.1.4:8000/predict',
              data: formData,
+             options: Options(responseType: ResponseType.bytes),
            );
+
            print('Response: ${response.data}');
-           Navigator.push(context, MaterialPageRoute(builder: (context) => ScreenThreeScreen(),));
+           Uint8List imageData = response.data;
+           Navigator.push(context, MaterialPageRoute(builder: (context) => ScreenThreeScreen(pickedImagePath: pickedFile.path,apiImagePath:imageData,),));
          }
          catch (e){
            print('Error sending image to backend: $e');

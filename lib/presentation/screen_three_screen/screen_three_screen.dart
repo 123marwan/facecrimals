@@ -1,3 +1,6 @@
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:marwan_s_application10/core/app_export.dart';
 import 'package:marwan_s_application10/presentation/iphone_12_pro_mockup_front_view_label_one_screen/iphone_12_pro_mockup_front_view_label_one_screen.dart';
@@ -6,7 +9,14 @@ import 'package:marwan_s_application10/presentation/iphone_13_mini_one_screen/ip
 import 'package:marwan_s_application10/presentation/screen_one_screen/screen_one_screen.dart';
 
 class ScreenThreeScreen extends StatefulWidget {
-  ScreenThreeScreen({Key? key}) : super(key: key);
+  final String? pickedImagePath;
+  final Uint8List? apiImagePath;
+
+  ScreenThreeScreen({
+    Key? key,
+    this.pickedImagePath,
+    this.apiImagePath,
+  }) : super(key: key);
 
   @override
   State<ScreenThreeScreen> createState() => _ScreenThreeScreenState();
@@ -100,7 +110,7 @@ class _ScreenThreeScreenState extends State<ScreenThreeScreen> {
     if (progress == 100) {
       Future.delayed(Duration(seconds: 1), () {
         Navigator.push(context,
-            MaterialPageRoute(builder: (context) => Iphone12ProMockupFrontViewLabelScreen(),));
+            MaterialPageRoute(builder: (context) => Iphone12ProMockupFrontViewLabelScreen(pickedImagePath: widget.pickedImagePath,apiImagePath:widget.apiImagePath),));
       },);
     }
   }

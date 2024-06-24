@@ -1,12 +1,17 @@
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:marwan_s_application10/core/app_export.dart';
 
 class Iphone12ProMockupFrontViewLabelScreen extends StatelessWidget {
-  const Iphone12ProMockupFrontViewLabelScreen({Key? key})
-      : super(
-          key: key,
-        );
-
+  final String? pickedImagePath;
+  final Uint8List? apiImagePath;
+  Iphone12ProMockupFrontViewLabelScreen({
+    Key? key,
+    this.pickedImagePath,
+    this.apiImagePath,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -90,16 +95,25 @@ class Iphone12ProMockupFrontViewLabelScreen extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        CustomImageView(
-          imagePath: ImageConstant.imgRectangle14,
+        Container(
+          child: Image.file(File(pickedImagePath!)),
           height: 127.adaptSize,
           width: 127.adaptSize,
         ),
-        CustomImageView(
-          imagePath: ImageConstant.imgRectangle15,
+
+
+
+        Container(
+          child:Image.memory(
+            apiImagePath!, // Display the image returned by the API
+            fit: BoxFit.cover,
+            width: 200,
+            height: 200,
+          ),
           height: 127.adaptSize,
           width: 127.adaptSize,
         ),
+
       ],
     );
   }
