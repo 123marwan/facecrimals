@@ -11,8 +11,8 @@ import 'dart:io';
 class ScreenTwoScreen extends StatelessWidget {
   const ScreenTwoScreen({Key? key})
       : super(
-          key: key,
-        );
+    key: key,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -75,35 +75,36 @@ class ScreenTwoScreen extends StatelessWidget {
 
       ),
       buttonStyle: CustomButtonStyles.none,
-     onPressed: () async {
-       final picker = ImagePicker();
-       final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-       if(pickedFile != null){
-         try{
-           FormData formData = FormData.fromMap({
-             'file': await MultipartFile.fromFile(pickedFile.path, filename: 'image.jpg'),
-           });
+      onPressed: () async {
+        final picker = ImagePicker();
+        final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+        if(pickedFile != null){
+          try{
+            FormData formData = FormData.fromMap({
+              'file': await MultipartFile.fromFile(pickedFile.path, filename: 'image.jpg'),
+            });
 
-           Dio dio = Dio();
-           dio.options.headers["Content-Type"] = "multipart/form-data";
+            Dio dio = Dio();
+            dio.options.headers["Content-Type"] = "multipart/form-data";
 
-           Response response = await dio.post(
-           'https://60ff-154-190-121-33.ngrok-free.app/predict',
-           //  'http://192.168.1.4:8000/predict',
-             data: formData,
-             options: Options(responseType: ResponseType.bytes),
-           );
+            Response response = await dio.post(
+              'https://1f43-154-185-202-250.ngrok-free.app/predict',
+              //  'http://192.168.1.4:8000/predict',
+              //https://1f43-154-185-202-250.ngrok-free.app/predict
+              data: formData,
+              options: Options(responseType: ResponseType.bytes),
+            );
 
-           print('Response: ${response.data}');
-           Uint8List imageData = response.data;
-           Navigator.push(context, MaterialPageRoute(builder: (context) => ScreenThreeScreen(pickedImagePath: pickedFile.path,apiImagePath:imageData,),));
-         }
-         catch (e){
-           print('Error sending image to backend: $e');
-         }
-       } //else{}
-      // Navigator.push(context, MaterialPageRoute(builder: (context) => ScreenThreeScreen(),));
-     },
+            print('Response: ${response.data}');
+            Uint8List imageData = response.data;
+            Navigator.push(context, MaterialPageRoute(builder: (context) => ScreenThreeScreen(pickedImagePath: pickedFile.path,apiImagePath:imageData,),));
+          }
+          catch (e){
+            print('Error sending image to backend: $e');
+          }
+        } //else{}
+        // Navigator.push(context, MaterialPageRoute(builder: (context) => ScreenThreeScreen(),));
+      },
 
 
       decoration: CustomButtonStyles.gradientIndigoAToPrimaryDecoration,
